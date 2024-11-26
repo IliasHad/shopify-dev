@@ -1,0 +1,27 @@
+[[extensions]]
+name = "Check customer email against blacklist records"
+handle = "flow-action"
+type = "flow_action"
+
+description = "Your description"
+runtime_url = "https://bg-either-choose-amateur.trycloudflare.com/api/check-customer"
+
+[settings]
+
+  [[settings.fields]]
+  type = "customer_reference"
+  required = true
+
+  [[settings.fields]]
+  type = "single_line_text_field"
+  key = "blacklist_tag"
+  name = "BlackList Customer Tag"
+  description = "A tag will be added to customer when we found their email in a blacklist record"
+  required = true
+
+  [[settings.fields]]
+  type = "single_line_text_field"
+  key = "whitelist_tag"
+  name = "Whitelist Customer Tag"
+  description = "A tag will be added to customer when we not found their email in a blacklist record"
+  required = true

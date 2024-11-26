@@ -1,0 +1,33 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "09971501a5c1297b4e7d1342c38912a8"
+application_url = "https://bg-either-choose-amateur.trycloudflare.com"
+embedded = true
+name = "Flow Action Demo"
+handle = "flow-action-demo"
+
+[build]
+include_config_on_deploy = true
+dev_store_url = "ilias-demo-store.myshopify.com"
+automatically_update_urls_on_dev = true
+
+[webhooks]
+api_version = "2024-10"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products,write_customers"
+
+[auth]
+redirect_urls = [
+  "https://bg-either-choose-amateur.trycloudflare.com/auth/callback",
+  "https://bg-either-choose-amateur.trycloudflare.com/auth/shopify/callback",
+  "https://bg-either-choose-amateur.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false
