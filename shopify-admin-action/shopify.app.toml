@@ -1,0 +1,33 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "4454584f0bd333c596972756ce22a309"
+application_url = "https://prints-west-extra-prompt.trycloudflare.com"
+embedded = true
+name = "Admin Actions Demo "
+handle = "admin-actions-demo"
+
+[build]
+include_config_on_deploy = true
+dev_store_url = "ilias-demo-store.myshopify.com"
+automatically_update_urls_on_dev = true
+
+[webhooks]
+api_version = "2024-10"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products,write_draft_orders"
+
+[auth]
+redirect_urls = [
+  "https://prints-west-extra-prompt.trycloudflare.com/auth/callback",
+  "https://prints-west-extra-prompt.trycloudflare.com/auth/shopify/callback",
+  "https://prints-west-extra-prompt.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false
