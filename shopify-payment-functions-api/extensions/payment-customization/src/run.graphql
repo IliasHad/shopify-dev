@@ -1,0 +1,16 @@
+query RunInput {
+  localization {
+    country {
+      isoCode
+    }
+  }
+  paymentCustomization {
+    metafield(namespace: "$app:payment-customization", key: "function-configuration") {
+      value
+    }
+  }
+  paymentMethods {
+    id
+    name
+  }
+}

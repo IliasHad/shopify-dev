@@ -1,0 +1,33 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "976092892dad93d7b086ca0b612dcc1d"
+application_url = "https://centres-gentleman-melissa-ia.trycloudflare.com"
+embedded = true
+name = "Payments Customizations API"
+handle = "payments-customizations-api"
+
+[build]
+include_config_on_deploy = true
+dev_store_url = "ilias-demo-store.myshopify.com"
+automatically_update_urls_on_dev = true
+
+[webhooks]
+api_version = "2024-10"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products,write_payment_customizations"
+
+[auth]
+redirect_urls = [
+  "https://centres-gentleman-melissa-ia.trycloudflare.com/auth/callback",
+  "https://centres-gentleman-melissa-ia.trycloudflare.com/auth/shopify/callback",
+  "https://centres-gentleman-melissa-ia.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false
