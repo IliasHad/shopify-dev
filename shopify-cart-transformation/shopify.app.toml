@@ -1,0 +1,33 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "ae7be187d8641dbcc36d62aeda3e6137"
+application_url = "https://aruba-forum-queens-unified.trycloudflare.com"
+embedded = true
+name = "Cart Transformations API"
+handle = "cart-transformations-api"
+
+[build]
+include_config_on_deploy = true
+dev_store_url = "ilias-demo-store.myshopify.com"
+automatically_update_urls_on_dev = true
+
+[webhooks]
+api_version = "2024-10"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products,write_cart_transforms"
+
+[auth]
+redirect_urls = [
+  "https://aruba-forum-queens-unified.trycloudflare.com/auth/callback",
+  "https://aruba-forum-queens-unified.trycloudflare.com/auth/shopify/callback",
+  "https://aruba-forum-queens-unified.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false
