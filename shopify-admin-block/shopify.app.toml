@@ -1,0 +1,33 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "7cbe1b69634f8c779ea5fc2e536e6233"
+application_url = "https://susan-row-institute-watches.trycloudflare.com"
+embedded = true
+name = "Admin Block Demo"
+handle = "admin-block-demo-2"
+
+[build]
+include_config_on_deploy = true
+dev_store_url = "ilias-demo-store.myshopify.com"
+automatically_update_urls_on_dev = true
+
+[webhooks]
+api_version = "2024-10"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products"
+
+[auth]
+redirect_urls = [
+  "https://susan-row-institute-watches.trycloudflare.com/auth/callback",
+  "https://susan-row-institute-watches.trycloudflare.com/auth/shopify/callback",
+  "https://susan-row-institute-watches.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false
