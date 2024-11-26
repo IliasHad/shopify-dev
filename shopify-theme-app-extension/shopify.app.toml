@@ -1,0 +1,33 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "892d1237390fa4ef6b848ec63d50bc70"
+application_url = "https://acids-continue-netscape-sk.trycloudflare.com"
+embedded = true
+name = "Theme App Extensions Demo"
+handle = "theme-app-extensions-demo-2"
+
+[build]
+include_config_on_deploy = true
+dev_store_url = "ilias-demo-store.myshopify.com"
+automatically_update_urls_on_dev = true
+
+[webhooks]
+api_version = "2024-10"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products"
+
+[auth]
+redirect_urls = [
+  "https://acids-continue-netscape-sk.trycloudflare.com/auth/callback",
+  "https://acids-continue-netscape-sk.trycloudflare.com/auth/shopify/callback",
+  "https://acids-continue-netscape-sk.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false
