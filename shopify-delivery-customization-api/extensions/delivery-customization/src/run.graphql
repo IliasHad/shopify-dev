@@ -1,0 +1,30 @@
+query RunInput {
+  deliveryCustomization {
+    metafield(
+      namespace: "$app:delivery-customization"
+      key: "function-configuration"
+    ) {
+      value
+    }
+  }
+  cart {
+    deliveryGroups {
+      deliveryOptions {
+        handle
+        title
+      }
+    }
+    
+    lines {
+      merchandise {
+        ... on ProductVariant {
+          weight
+          product {
+            handle
+          }
+          weightUnit
+        }
+      }
+    }
+  }
+}
