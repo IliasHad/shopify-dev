@@ -1,0 +1,287 @@
+<div id="bundle-app"></div>
+<script  src="https://unpkg.com/preact@10.5.13/dist/preact.min.js"></script>
+<script  src="https://unpkg.com/preact@10.5.13/hooks/dist/hooks.umd.js"></script>
+
+<style>
+  .bundle-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .bundle-header h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+  
+  .bundle-header p {
+    color: #666;
+    font-size: 16px;
+  }
+  
+  .bundle-products {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .product-item {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .product-image {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+  }
+  
+  .product-image img {
+    width: 100%;
+    height:  100%;
+    object-fit: contain;
+    object-position: center;
+    padding: 5px;
+  }
+  
+  .product-details {
+    flex-grow: 1;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .product-details h3 {
+    margin-top: 0;
+    font-size: 18px;
+  }
+  
+
+  
+  .current-price {
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .original-price {
+    text-decoration: line-through;
+    color: #888;
+  }
+  
+  .product-quantity {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .quantity-label {
+    display: inline-block;
+    padding: 2.5px 10px;
+    background-color: #f4f4f4;
+    border-radius: 20px;
+    margin-left: 10px;
+  }
+  
+  .variant-select {
+    background-color: transparent;
+    border: none;
+    color: #4169e1;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .arrow-down {
+    margin-left: 5px;
+    font-size: 12px;
+  }
+  
+  .bundle-summary {
+    margin-top: 30px;
+  }
+  
+  .total-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
+  
+  .total-label {
+    font-weight: bold;
+  }
+  
+  .current-total {
+    font-size: 28px;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .original-total {
+    text-decoration: line-through;
+    color: #888;
+  }
+  
+  .add-bundle-btn {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 10px 0;
+  }
+  
+  .add-bundle-btn:hover {
+    background-color: #444;
+  
+  }
+  .bundle-offer-label {
+    margin: 10px 0;
+    font-size: 15px;
+    font-weight: bold;
+  }
+</style>
+
+<script async>
+const { h, render, createContext } = preact;
+const { useState, useEffect } = preactHooks;
+
+
+
+function ProductCard({ variant, product, bundle }) {
+  return h("div", { className: "product-item" },
+    h("div", { className: "product-image" },
+      h("img", { src: product.featuredImage, alt: product.title })
+    ),
+    h("div", { className: "product-details" },
+      h("h3", null, `${product.title} -  ${variant.title}` ),
+      h("div", { className: "product-price" },
+        bundle.showComparisonPrice ? 
+        h("span", { className:  "original-price"}, `MAD ${variant.originalPrice}`): null,
+        h("span", { className:  bundle.showComparisonPrice ? "current-price": "original-price"  }, `MAD ${Math.round(variant.originalPrice - (variant.originalPrice * (product.offer / 100)))  }`),
+        h("span", { className: "quantity-label" }, `x${product.quantity}`),
+      ),
+    )
+  );
+}
+
+function BundlePrice({ bundle, bundleIndex }) {
+  return h('div', { className: 'bundle-price-container' },
+    h('div', { className: 'bundle-price-inner' },
+        h('h5', { className: 'bundle-offer-label' }, `${bundle.displayText} ${bundleIndex}`  ),
+    )
+  );
+}
+
+function BundleCard({ bundle, bundleIndex }) {
+  const [loading, setLoading] = useState(false);
+
+  const addToCart = () => {
+    setLoading(true);
+    const input = document.createElement("input");
+    input.name = "properties[_bundleIndex]";
+    input.type = "hidden";
+    input.value = bundleIndex
+
+    const productForm = document.querySelector("form[action='/cart/add']"); // Better approach: Use Cart API
+    if (productForm) {
+      productForm.appendChild(input);
+      productForm.submit(); 
+      if(bundle.directToCheckout) {
+      // TODO: directly switch to the checkout page
+      }
+     
+    } else {
+      console.error("Form not found.");
+      setLoading(false); 
+    }
+  };
+
+  return h(
+    "div",
+    { className: "bundle-card" },
+    h(BundlePrice, { bundle, bundleIndex }),
+    h(
+      "div",
+      { className: "bundle-products" },
+      bundle.selectedProducts.map((product) =>
+      product.variants.map((variant) =>
+        h(ProductCard, {
+          key: variant.id,
+          variant:variant,
+          product,
+          bundle
+        })
+)
+      )
+    ),
+    h(
+      "button",
+      {
+        className: "add-bundle-btn",
+        onClick: addToCart,
+        disabled: loading, // Disable button while loading
+      },
+      loading ? "Loading..." : "Select this bundle"
+    )
+  );
+}
+
+function App() {
+  const [bundles, setBundles] = useState([]);
+  const [loadingBundles, setLoadingBundles] = useState(true);
+  const [errorBundles, setErrorBundles] = useState(null);
+
+  useEffect(() => {
+    fetch("/apps/bundles")
+      .then((response) => response.json())
+      .then((data) => {
+        setBundles(data.bundles);
+        setLoadingBundles(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching bundles:", error);
+        setErrorBundles("Failed to load bundles.");
+        setLoadingBundles(false);
+      });
+  }, []);
+
+  if (loadingBundles) {
+    return h("div", null, "Loading bundles...");
+  }
+
+  if (errorBundles) {
+    return h("div", null, errorBundles);
+  }
+
+  return h(
+    "div",
+    { className: "bundle-container" },
+    bundles.length
+      ? bundles.map((bundle, index) => h(BundleCard, { key: bundle.displayText, bundle, bundleIndex:index }))
+      : null
+  );
+}
+
+render(h(App), document.getElementById('bundle-app'));
+</script>
+
+{% schema %}
+{
+  "name": "Product Bundles",
+  "target": "section",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product", "autofill": true }
+  ]
+}
+{% endschema %}

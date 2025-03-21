@@ -1,0 +1,41 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "d793987733509c95890070bcb4069456"
+application_url = "https://into-guinea-mistake-toronto.trycloudflare.com"
+embedded = true
+name = "Bundle App - Youtube Video"
+handle = "bundle-app-youtube-video"
+
+[build]
+include_config_on_deploy = true
+automatically_update_urls_on_dev = true
+
+[webhooks]
+api_version = "2025-01"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/scopes_update" ]
+  uri = "/webhooks/app/scopes_update"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products,write_cart_transforms"
+
+[auth]
+redirect_urls = [
+  "https://into-guinea-mistake-toronto.trycloudflare.com/auth/callback",
+  "https://into-guinea-mistake-toronto.trycloudflare.com/auth/shopify/callback",
+  "https://into-guinea-mistake-toronto.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false
+
+[app_proxy]
+url = "https://into-guinea-mistake-toronto.trycloudflare.com/storefront/bundles"
+subpath = "bundles"
+prefix = "apps"
