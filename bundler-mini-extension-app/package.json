@@ -1,0 +1,35 @@
+{
+  "name": "bundler-mini-extension-app",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "shop-minis dev",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@shopify/shop-minis-platform-sdk": "0.1.139",
+    "@shopify/shop-minis-runtime": "0.0.137",
+    "@shopify/shop-minis-ui-extensions": "0.0.20"
+  },
+  "devDependencies": {
+    "@shopify/shop-minis-cli": "0.0.158",
+    "@types/jest": "^29.2.6",
+    "babel-jest": "^26.6.3",
+    "eslint": "^8.32.0",
+    "jest": "^29.3.1",
+    "prettier": "^2.8.2"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "overrides": {
+    "graphql": "15.8.0",
+    "react": "18.2.0",
+    "react-native": "0.73.2"
+  },
+  "resolutions": {
+    "@apollo/federation": "0.38.1",
+    "graphql": "15.8.0"
+  }
+}

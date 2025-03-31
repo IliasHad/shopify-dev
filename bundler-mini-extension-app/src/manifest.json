@@ -1,0 +1,12 @@
+{
+  "name": "bundler-mini-extension-app",
+  "features": [
+    "FULL_BLEED_VIEWER"
+  ],
+  "handle": "bundler-mini-extension-app",
+  "shopify_apps": {
+    "development": [
+      236506513409
+    ]
+  }
+}

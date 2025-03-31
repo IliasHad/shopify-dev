@@ -1,0 +1,15 @@
+query ProductVariantsRenderBefore {
+  product {
+    id
+    title
+    bundledComponentData: metafield(
+      namespace: "app--236506513409--bundles"
+      key: "function-configuration"
+    ) {
+      value
+    }
+  }
+  shop {
+    id
+  }
+}
