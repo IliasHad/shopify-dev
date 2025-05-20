@@ -1,0 +1,40 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "649debe005437f06413489cc74730226"
+name = "Order Invoice "
+handle = "order-invoice-12"
+application_url = "https://cope-sam-certified-slides.trycloudflare.com"
+embedded = true
+
+[build]
+include_config_on_deploy = true
+automatically_update_urls_on_dev = true
+
+[webhooks]
+api_version = "2025-04"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/scopes_update" ]
+  uri = "/webhooks/app/scopes_update"
+
+  [[webhooks.subscriptions]]
+  topics = [ "orders/fulfilled" ]
+  uri = "/webhooks/orders_fulfilled"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_orders"
+
+[auth]
+redirect_urls = [
+  "https://cope-sam-certified-slides.trycloudflare.com/auth/callback",
+  "https://cope-sam-certified-slides.trycloudflare.com/auth/shopify/callback",
+  "https://cope-sam-certified-slides.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false
